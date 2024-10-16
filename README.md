@@ -1,8 +1,73 @@
 # RNA-seq analysis pipeline
 
 ## Description
-A Snakemake pipeline for the analysis of _messenger_ RNA-seq data. It processes paired-end mRNA-seq fastq files and delivers raw count tables. This pipeline also outputs a QC report per fastq file and a `.bam` mapping file to use with a genome browser for instance.
+A nextflow pipeline for the analysis of _messenger_ RNA-seq data. It processes paired-end mRNA-seq fastq files and delivers raw count tables. This pipeline also outputs a QC report per fastq file and a `.bam` mapping file to use with a genome browser for instance.
 
+## Installation
+https://www.nextflow.io/blog/2021/setup-nextflow-on-windows.html
+```
+curl -s https://get.nextflow.io | bash
+./nextflow run hello
+./nextflow run nf-core/rnaseq -profile docker,test --outdir test
+./nextflow run nf-core/rnaseq --max_memory '6.GB' --max_cpus 2  --input config/samples.csv --outdir results --genome GRCh37 -profile docker
+rm 
+## Custom genome
+
+https://nf-co.re/docs/usage/reference_genomes
+
+    3  wget http://ftp.ensembl.org/pub/release-112/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa.gz
+    5  wget http://ftp.ensembl.org/pub/release-112/gtf/homo_sapiens/Homo_sapiens.GRCh38.112.gtf.gz
+
+
+
+rm -rf work/ result/ .nextflow*
+./nextflow run nf-core/rnaseq --max_memory '6.GB' --max_cpus 2  --input config/samples.csv --outdir results --gtf Homo_sapiens.GRCh38.112.gtf.gz --fasta Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa.gz -profile docker 
+
+sudo touch nohup.out
+sudo nohup dockerd &
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_genomic.gtf.gz
+wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/001/405/GCF_000001405.40_GRCh38.p14/GCF_000001405.40_GRCh38.p14_cds_from_genomic.fna.gz
+sudo rm -rf work/ result/ .nextflow*
+
+wget http://genomedata.org/rnaseq-tutorial/HBR_UHR_ERCC_ds_5pc.tar
+tar -xvf HBR_UHR_ERCC_ds_5pc.tar
+ 9  ls -ltrh test/salmon/deseq2_qc/
+   10  ls -ltrh test/salmon/
+   11  ls -ltrh test/salmon/salmon.merged.gene_counts_length_scaled.tsv
+   12  less  test/salmon/salmon.merged.gene_counts_length_scaled.tsv
+   13  ls
+   14  ls work/
+   15  find . -iname "sample*csv"
+   16  find . -iname "*gtf*"
+   17  find . -iname "*gtf*" | less
+   18  find . -iname "*gtf" | less
+   19  find . -iname "*genome" | less
+   20  find . -iname "*genome*fa*" | less
+   21  hsi
+   22  history 
+   23  wget http://ftp.ensembl.org/pub/release-112/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna_sm.primary_assembly.fa.gz
+   24  wget http://ftp.ensembl.org/pub/release-112/gtf/homo_sapiens/Homo_sapiens.GRCh38.112.gtf.gz
+   25  rm -rf work/ result/ .nextflow*
+   26  ls
+wget http://genomedata.org/rnaseq-tutorial/HBR_UHR_ERCC_ds_5pc.tar
+tar -xvf HBR_UHR_ERCC_ds_5pc.tar
+echo "sample,fastq_1,fastq_2,strandedness" > samples.csv
+rm c?
+ls -1 *1.fastq.gz | awk -F "_" '{print $1 $2}' > c0
+ls -1 $PWD/*1.fastq.gz > c1
+ls -1 $PWD/*2.fastq.gz > c2
+printf 'auto\n%.0s' {1..`ls *1.fastq.gz`} > c3
+paste -d "," c? >> samples.csv
+cat samples.csv
+curl -s https://get.nextflow.io | bash
+./nextflow run hello
+./nextflow run nf-core/rnaseq -profile docker,test --outdir test
+./nextflow run nf-core/rnaseq --max_memory '63.GB' --max_cpus 16  --input samples.csv --outdir results --genome GRCh37 -profile docker
+
+
+sudo ./nextflow run nf-core/rnaseq --max_memory '16.GB' --max_cpus 4  --input config/samples.csv --outdir test --gtf GCF_000001405.40_GRCh38.p14_genomic.gtf.gz --fasta GCF_000001405.40_GRCh38.p14_cds_from_genomic.fna.gz -profile dock
+er -resume
+```
 
 ## Input files
 * __RNA-seq fastq files__ as listed in the `config/samples.tsv` file. Specify a sample name (e.g. "Sample_A") in the `sample` column and the paths to the forward read (`fq1`) and to the reverse read (`fq2`).
@@ -78,3 +143,9 @@ Developing...
 If you use this software, please use the following citation:
 Wang D., Liu Y., et al. A real-world multi-center RNA-seq benchmarking study using the Quartet
 and MAQC reference materials. *bioRxiv* 2023.12.09.570956; doi: https://doi.org/10.1101/2023.12.09.570956
+
+
+sample,fastq_1,fastq_2,strandedness
+UHR2,UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz,UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz,auto
+
+
