@@ -1,0 +1,1 @@
+2024-10-16 13:29:46	-	elegant_bose	-	33df0c05ef99d1d9af97d1d74681ab0452612abb	97532169-363c-43c0-a3ff-8bbb09bb890d	nextflow run nf-core/rnaseq --max_memory 6.GB --max_cpus 2 --input samples.csv --outdir results --gtf chr22_with_ERCC92.PCA.gtf --fasta chr22_with_ERCC92.fa -profile docker

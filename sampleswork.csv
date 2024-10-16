@@ -1,0 +1,2 @@
+sample,fastq_1,fastq_2,strandedness
+UHR2,UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read1.fastq.gz,UHR_Rep1_ERCC-Mix1_Build37-ErccTranscripts-chr22.read2.fastq.gz,auto
